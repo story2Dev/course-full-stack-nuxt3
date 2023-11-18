@@ -10,3 +10,9 @@
         </form>
     </div>
 </template>
+
+<script setup>
+useHead({
+    title:'Add Product'
+})
+</script>

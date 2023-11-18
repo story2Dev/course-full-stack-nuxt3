@@ -2,6 +2,9 @@
     <div>
         Product page - 
         <nuxt-link to="/products/add">Add</nuxt-link>
+        <button @click="$router.push('/products/add')">
+            add
+        </button>
         <table>
             <tr>
                 <td>Name</td>
@@ -29,3 +32,10 @@
         </table>
     </div>
 </template>
+
+
+<script setup>
+useHead({
+    title:'Product',
+})
+</script>
