@@ -14,6 +14,9 @@ function increment2() {
 </script>
 <template>
     <div>
+
+        <Icon name="uil:github" color="black" />
+
         <h1>{{msg}}</h1>
         <div>
             <button @click="counter--">-</button>
