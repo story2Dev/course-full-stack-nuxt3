@@ -1,34 +1,32 @@
 <script setup lang="ts">
-const msg = 'Hello World!'
-const name = 'Vue 3'
-const { counter, increment, decrement } = useCounter()
+const name = 'Chocolate Cake';
+const price = 10;
 
-let counter2 = 0
+const carts = useState<any[]>('carts', ()=> [])
 
-function increment2() {
-  counter.value++
-  console.log(counter.value)
+function addToCart(item: any) {
+    console.log(item)
+    carts.value.push(item)
+}
+function handleRemove(item: any) {
+    console.log(item)
 }
 
+const products = [
+    {name: 'Chocolate Cake', price: 10, imageUrl: 'https://joyfoodsunshine.com/wp-content/uploads/2020/08/best-chocolate-cake-recipe-from-scratch-8.jpg'},
+    {name: 'Cake', price: 20, imageUrl: 'https://joyfoodsunshine.com/wp-content/uploads/2020/08/best-chocolate-cake-recipe-from-scratch-8.jpg'},
+]
 
 </script>
 <template>
     <div>
-        <h1>{{msg}}</h1>
-        <div>
-            <button @click="counter--">-</button>
-           (ref) {{ counter }}
-            <button @click="increment2()">+</button>
-        </div>
-
-        <div>
-            <button @click="counter2--">-</button>
-           (no ref) {{ counter2 }}
-            <button @click="increment()">+</button>
-        </div>
+        {{ carts.length }}
+        <ProductCard v-for="(item, index) in products" 
+         :key="index" 
+         :name="item.name"
+         :price="item.price"
+         :image-url="item.imageUrl" 
+         @add-to-cart="addToCart" @remove="handleRemove">
+        </ProductCard>
     </div>
 </template>
-
-<style scoped>
-
-</style>
