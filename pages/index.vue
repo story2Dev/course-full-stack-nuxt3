@@ -17,9 +17,18 @@ const products = [
     {name: 'Cake', price: 20, imageUrl: 'https://joyfoodsunshine.com/wp-content/uploads/2020/08/best-chocolate-cake-recipe-from-scratch-8.jpg'},
 ]
 
+function testError() {
+    try {
+        throw new Error('[testError]: test error')
+    } catch (error) {
+        throw new Error('[testError]: test error')
+    } 
+}
+
 </script>
 <template>
     <div>
+       <button @click="testError">test error</button>
         {{ carts.length }}
         <ProductCard v-for="(item, index) in products" 
          :key="index" 

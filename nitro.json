@@ -1,0 +1,13 @@
+{
+    "environments": {
+      "development": {
+        "command": "nuxt dev",
+        "port": 3000
+      },
+      "production": {
+        "command": "nuxt start",
+        "port": 5000
+      }
+    }
+  }
+  
