@@ -1,0 +1,6 @@
+[build]
+  command = "nuxt build"
+  functions = ".output/server"
+
+[publish]
+  directory = "dist"
