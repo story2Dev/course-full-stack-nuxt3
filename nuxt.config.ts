@@ -16,4 +16,10 @@ export default defineNuxtConfig({
       ],
     },
   },
+  modules: [
+    '@nuxtjs/tailwindcss', '@bg-dev/nuxt-naiveui'
+  ],
+  tailwindcss: {
+    exposeConfig: true
+  }
 });

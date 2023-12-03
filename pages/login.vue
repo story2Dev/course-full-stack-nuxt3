@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="bg-red-200">
     <h1>Login</h1>
-    <input v-model="frm.email" type="text" placeholder="Email" />
-    <input v-model="frm.password" 
+    <n-input v-model="frm.email" type="text" placeholder="Email" />
+    <n-input v-model="frm.password" 
      @keyup.enter="handleLogin()"
      type="password" placeholder="Password" />
     <input type="button" value="Login" @click="handleLogin()" />
