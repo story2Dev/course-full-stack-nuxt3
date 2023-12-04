@@ -21,5 +21,10 @@ export default defineNuxtConfig({
   ],
   tailwindcss: {
     exposeConfig: true
+  },
+  runtimeConfig: {
+    public: {
+      authApi: process.env.NHOST_AUTH_URL,
+    }
   }
 });
