@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    '@nuxtjs/tailwindcss', '@bg-dev/nuxt-naiveui'
+    '@nuxtjs/tailwindcss', '@bg-dev/nuxt-naiveui','@nuxtjs/apollo'
   ],
   tailwindcss: {
     exposeConfig: true
@@ -25,6 +25,26 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       authApi: process.env.NHOST_AUTH_URL,
+    }
+  },
+
+  apollo: {
+    clients: {
+      default: {
+        httpEndpoint: process.env.NHOST_GRAPHQL_URL +'',
+        browserHttpEndpoint: '',
+        wsEndpoint: '',
+        httpLinkOptions: {},
+        wsLinkOptions: {},
+        websocketsOnly: false,
+        connectToDevTools: false,
+        defaultOptions: {},
+        inMemoryCacheOptions: {},
+        tokenName: 'token',
+        tokenStorage: 'cookie',
+        authType: 'Bearer',
+        authHeader: 'Authorization'
+      },
     }
   }
 });
