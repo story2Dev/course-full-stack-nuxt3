@@ -29,6 +29,7 @@ export default defineNuxtConfig({
   },
 
   apollo: {
+    autoImports: true,
     clients: {
       default: {
         httpEndpoint: process.env.NHOST_GRAPHQL_URL +'',

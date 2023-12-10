@@ -24,7 +24,7 @@ definePageMeta({
 const notification = useNotification();
 
 const frm = ref({
-  email: "example.com",
+  email: "",
   password: "",
 });
 const loading = ref(false);
