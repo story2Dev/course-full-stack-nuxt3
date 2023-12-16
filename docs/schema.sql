@@ -2,6 +2,7 @@ create table if not exists terms(
     id serial PRIMARY KEY,
     name text NOT NULL,
     parent_id int null,
+    group_id int null,
     created_at timestamp NOT NULL DEFAULT now(),
     updated_at timestamp NOT NULL DEFAULT now()
 ); 
