@@ -22,48 +22,37 @@ definePageMeta({
 });
 
 const notification = useNotification();
-
+const auth = useAuth();
 const frm = ref({
   email: "",
   password: "",
 });
 const loading = ref(false);
 
-const sessionCookie = useCookie('sessionKookie');
-const token = useCookie('token')
-
 async function handleLogin() {
   try {
-    const config = useRuntimeConfig()
-    loading.value = true
-    const req: any = await $fetch(config.public.authApi+ '/signin/email-password', {
-      method: 'POST',
-      body: frm.value
-    })
+    loading.value = true;
+    const { email, password } = frm.value;
+    const isLogged = await auth.signIn(email, password);
 
-    const { session } = req
-    sessionCookie.value = session
-    token.value = session.accessToken
-
-    notification.success({
-      title: 'Authentication success',
-      description: 'You are now logged in',
-      duration: 3000
-    })
-
-    navigateTo('/')
-    loading.value = false
-    console.log(req)
+    if (isLogged) {
+      notification.success({
+        title: "Authentication success",
+        description: "You are now logged in",
+        duration: 3000,
+      });
+      navigateTo("/");
+    }
+    
+    loading.value = false;
   } catch (error) {
     notification.error({
-      title: 'Authentication failed',
-      description: 'Email or password is incorrect',
-      duration: 3000
-    })
-    loading.value = false
-    console.log(error)
+      title: "Authentication failed",
+      description: "Email or password is incorrect",
+      duration: 3000,
+    });
+    loading.value = false;
+    console.log(error);
   }
 }
 </script>
-
-<style scoped></style>

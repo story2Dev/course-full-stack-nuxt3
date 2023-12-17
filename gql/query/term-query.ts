@@ -18,5 +18,10 @@ export const TERMS_QUERY = gql`
       createdAt: created_at
       updatedAt: updated_at
     }
+    aggregate: terms_aggregate(where: $where) {
+      aggregate {
+        count
+      }
+    }
   }
 `;
