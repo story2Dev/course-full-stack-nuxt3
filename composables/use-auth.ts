@@ -5,6 +5,9 @@ export const useAuth = () => {
   const sessionCookie = useCookie<any>(KEY_SESSION);
   const token = useCookie(KEY_TOKEN);
 
+  const isAdmin = computed(() => sessionCookie.value?.user?.defaultRole === "admin");
+  const isAuth = computed(() => !!sessionCookie.value);
+
   function setAuth(_session: any) {
     sessionCookie.value = {
       ..._session,
@@ -53,5 +56,7 @@ export const useAuth = () => {
   return {
     signIn,
     refreshToken,
+    isAdmin,
+    isAuth
   };
 };

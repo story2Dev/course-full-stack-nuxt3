@@ -38,4 +38,8 @@
 useHead({
     title:'Product',
 })
+
+definePageMeta({
+    middleware: 'logged-only'
+})
 </script>
