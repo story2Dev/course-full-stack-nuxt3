@@ -28,7 +28,17 @@
               <td>{{ item.name }}</td>
               <td>
                 <n-button size="small" @click="setEdit(item)">Edit</n-button>
-                <n-button size="small">Delete</n-button>
+
+                <n-popconfirm
+                  @positive-click="handleDelete(item.id)"
+                  positive-text="Delete"
+                  negative-text="Cancel"
+                >
+                  <template #trigger>
+                    <n-button size="small">Delete</n-button>
+                  </template>
+                  <div>Are you sure to delete "{{ item.name }}" ?</div>
+                </n-popconfirm>
               </td>
             </tr>
           </tbody>
@@ -124,14 +134,14 @@ const UPDATE = gql`
 async function handleUpdate() {
   try {
     const { id, name } = frm.value;
-    const {data, errors } = await client.mutate({
+    const { data, errors } = await client.mutate({
       mutation: UPDATE,
       variables: {
-        id, 
-        object: { name }
-      }
-    })
-    console.log({data, errors })
+        id,
+        object: { name },
+      },
+    });
+    console.log({ data, errors });
     if (!errors) {
       notification.success({ title: "Update success", duration: 3000 });
       items.value = items.value.map((item: any) => {
@@ -154,5 +164,28 @@ const frm = ref({
 
 function setEdit(item: any) {
   frm.value = { ...item };
+}
+
+const DELETE = gql`
+  mutation deleteTerm($id: Int!) {
+    term: delete_terms_by_pk(id: $id) {
+      id
+    }
+  }
+`;
+
+async function handleDelete(id: number) {
+  try {
+    console.log({ id });
+    items.value = items.value.filter((item: any) => item.id !== id);
+    const {data, errors } = await client.mutate({ mutation: DELETE, variables: { id } });
+    
+    if(errors) {
+      notification.warning({ title: "Delete failed", duration: 3000 });
+      throw new Error(`Cannot delete term: ${errors}`);
+    }
+  } catch (error) {
+    throw new Error(`Cannot delete term: ${error}`);
+  }
 }
 </script>
