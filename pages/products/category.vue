@@ -124,13 +124,14 @@ const UPDATE = gql`
 async function handleUpdate() {
   try {
     const { id, name } = frm.value;
-    const {data, errors} = await client.mutate({
+    const {data, errors } = await client.mutate({
       mutation: UPDATE,
       variables: {
         id, 
         object: { name }
       }
     })
+    console.log({data, errors })
     if (!errors) {
       notification.success({ title: "Update success", duration: 3000 });
       items.value = items.value.map((item: any) => {
