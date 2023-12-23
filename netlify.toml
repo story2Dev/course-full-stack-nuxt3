@@ -1,4 +1,4 @@
 [build]
   command = "nuxt build"
   functions = ".output/server"
-  publish = "dist"
+  publish = ".output/public"
