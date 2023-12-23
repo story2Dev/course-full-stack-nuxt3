@@ -20,7 +20,10 @@
       <div>
         <table>
           <tr>
-            <th>Name</th>
+            <th class="cursor-pointer" @click="toggleOrderBy">
+              Name
+              <Icon :name="orderByMode === 'asc' ? 'system-uicons:arrow-up' : 'system-uicons:arrow-down'" />
+            </th>
             <th>Action</th>
           </tr>
           <tbody>
@@ -62,6 +65,12 @@ const search = ref("");
 const totalPage = ref(0);
 const limit = 10;
 
+const orderByMode = ref("asc");
+function toggleOrderBy() {
+  orderByMode.value = orderByMode.value === "asc" ? "desc" : "asc";
+  handleSearch();
+}
+
 async function handleSearch() {
   const { value } = search;
   const where = value
@@ -80,6 +89,7 @@ async function handleSearch() {
     where,
     limit,
     offset: (page.value - 1) * limit,
+    orderBy: { name: orderByMode.value },
   });
   totalPage.value = Math.ceil(count / limit);
   if (errors) {
@@ -176,7 +186,6 @@ const DELETE = gql`
 
 async function handleDelete(id: number) {
   try {
-    console.log({ id });
     items.value = items.value.filter((item: any) => item.id !== id);
     const {data, errors } = await client.mutate({ mutation: DELETE, variables: { id } });
     

@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     },
   },
   modules: [
-    '@nuxtjs/tailwindcss', '@bg-dev/nuxt-naiveui','@nuxtjs/apollo'
+    '@nuxtjs/tailwindcss', '@bg-dev/nuxt-naiveui','@nuxtjs/apollo', 'nuxt-icon'
   ],
   tailwindcss: {
     exposeConfig: true
