@@ -6,6 +6,11 @@
       <n-button @click="handleAdd">Add</n-button>
     </div>
 
+    <div class="flex">
+      <n-input v-model:value="frm.name"></n-input>
+      <n-button @click="handleUpdate">Update</n-button>
+    </div>
+
     <n-card>
       <n-input
         v-model:value="search"
@@ -22,7 +27,7 @@
             <tr v-for="(item, index) in items" :key="index">
               <td>{{ item.name }}</td>
               <td>
-                <n-button size="small">Edit</n-button>
+                <n-button size="small" @click="setEdit(item)">Edit</n-button>
                 <n-button size="small">Delete</n-button>
               </td>
             </tr>
@@ -106,5 +111,47 @@ async function handleAdd() {
   } catch (error) {
     throw new Error(`Cannot add term: ${error}`);
   }
+}
+
+const UPDATE = gql`
+  mutation updateTerm($id: Int!, $object: terms_set_input) {
+    term: update_terms_by_pk(pk_columns: { id: $id }, _set: $object) {
+      id
+      name
+    }
+  }
+`;
+async function handleUpdate() {
+  try {
+    const { id, name } = frm.value;
+    const {data, errors} = await client.mutate({
+      mutation: UPDATE,
+      variables: {
+        id, 
+        object: { name }
+      }
+    })
+    if (!errors) {
+      notification.success({ title: "Update success", duration: 3000 });
+      items.value = items.value.map((item: any) => {
+        if (item.id === id) {
+          return data.term;
+        }
+        return item;
+      });
+      frm.value = { name: "", id: 0 };
+    }
+  } catch (error) {
+    throw new Error(`Cannot update term: ${error}`);
+  }
+}
+
+const frm = ref({
+  name: "",
+  id: 0,
+});
+
+function setEdit(item: any) {
+  frm.value = { ...item };
 }
 </script>
