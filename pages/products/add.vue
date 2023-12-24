@@ -19,6 +19,8 @@
             v-model:value="frm.price"
             placeholder="Price"
             :show-button="false"
+            :parse="parse"
+            :format="format"
           />
         </n-form-item>
         <n-form-item label="Cost">
@@ -26,6 +28,8 @@
             v-model:value="frm.cost"
             placeholder="Cost"
             :show-button="false"
+            :parse="parse"
+            :format="format"
           />
         </n-form-item>
         <n-form-item label="Init Stock">
@@ -43,7 +47,13 @@
       </div>
       <div class="mb-4">
         <label for="image">Image</label>
-        <input type="file" id="image" accept="image/*" class="hidden" @change="handleSelectImage" />
+        <input
+          type="file"
+          id="image"
+          accept="image/*"
+          class="hidden"
+          @change="handleSelectImage"
+        />
         <article
           class="w-20 h-20 bg-slate-200 rounded-lg items-center flex justify-center"
         >
@@ -52,7 +62,6 @@
             <span id="previewImage"></span>
           </label>
         </article>
-       
       </div>
       <div class="flex gap-2">
         <n-button>Cancel</n-button>
@@ -62,7 +71,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 useHead({
   title: "Add Product",
 });
@@ -79,16 +88,26 @@ const frm = ref({
 
 const image = ref(null);
 
-function handleSelectImage(e) {
+function handleSelectImage(e: any) {
   const file = e.target.files[0];
   const reader = new FileReader();
+  const previewImage = document.getElementById("previewImage") as HTMLElement;
   reader.readAsDataURL(file);
   reader.onload = (e) => {
     image.value = file;
-    console.log(image.value)
-    document.getElementById(
-      "previewImage"
-    ).innerHTML = `<img src="${image.value}" class="w-20 h-20 rounded-lg" />`;
+    console.log(image.value);
+    previewImage.innerHTML = `<img src="${image.value}" class="w-20 h-20 rounded-lg" />`;
   };
 }
+
+const parse = (input: string) => {
+  const nums = input.replace(/,/g, "").trim();
+  if (/^\d+(\.(\d+)?)?$/.test(nums)) return Number(nums);
+  return nums === "" ? null : Number.NaN;
+};
+
+const format = (value: number | null) => {
+  if (value === null) return "";
+  return value.toLocaleString("en-US");
+};
 </script>
