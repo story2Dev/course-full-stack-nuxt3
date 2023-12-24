@@ -42,7 +42,12 @@
       </div>
       <div>
         <n-form-item label="Category">
-          <n-select v-model:value="frm.categoryId" :options="categories" value-field="id" label-field="name" />
+          <n-select
+            v-model:value="frm.categoryId"
+            :options="categories"
+            value-field="id"
+            label-field="name"
+          />
         </n-form-item>
       </div>
       <div class="mb-4">
@@ -72,8 +77,10 @@
 </template>
 
 <script setup lang="ts">
+import { KEY_TOKEN } from "~/constants";
+
 const { client } = useApolloClient();
-const notification =  useNotification();
+const notification = useNotification();
 useHead({
   title: "Add Product",
 });
@@ -151,9 +158,30 @@ const INSERT = gql`
   }
 `;
 
+const token = useCookie(KEY_TOKEN);
+
 async function handleAdd() {
   try {
-    const { name, description, price, cost, categoryId, stock } = frm.value;
+    const { name, description, price, cost, categoryId, stock, imageUrl } = frm.value;
+
+    if (image.value) {
+      const config = useRuntimeConfig();
+      const formData = new FormData();
+      formData.append("file", image.value);
+      const req = await fetch(`${config.public.uploadUrl}/files`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token.value}`,
+        },
+        body: formData,
+      });
+      const res = await req.json();
+      if (req.status === 201) {
+        frm.value.imageUrl = res.id;
+      }
+      console.log(res);
+    }
+
     const { data, errors } = await client.mutate({
       mutation: INSERT,
       variables: {
@@ -164,10 +192,11 @@ async function handleAdd() {
           cost,
           stock,
           category_id: categoryId,
+          image_url: imageUrl || null,
         },
       },
     });
-    if(!errors) {
+    if (!errors) {
       notification.success({ title: "Add success", duration: 3000 });
       frm.value = {
         name: "",
@@ -178,9 +207,9 @@ async function handleAdd() {
         categoryId: 0,
         imageUrl: "",
       };
-      return
+      return;
     }
-    
+
     notification.error({ title: "Add failed", duration: 3000 });
     throw new Error(`Cannot add product: ${errors}`);
   } catch (error) {

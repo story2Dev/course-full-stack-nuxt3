@@ -25,6 +25,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       authApi: process.env.NHOST_AUTH_URL,
+      uploadUrl: process.env.NHOST_STORAGE_URL,
     }
   },
 
