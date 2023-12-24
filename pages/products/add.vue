@@ -42,7 +42,7 @@
       </div>
       <div>
         <n-form-item label="Category">
-          <n-select :options="categories" value-field="id" label-field="name" />
+          <n-select v-model:value="frm.categoryId" :options="categories" value-field="id" label-field="name" />
         </n-form-item>
       </div>
       <div class="mb-4">
@@ -65,7 +65,7 @@
       </div>
       <div class="flex gap-2">
         <n-button>Cancel</n-button>
-        <n-button type="primary">Save</n-button>
+        <n-button type="primary" @click.prevent="handleAdd">Save</n-button>
       </div>
     </n-card>
   </div>
@@ -73,7 +73,7 @@
 
 <script setup lang="ts">
 const { client } = useApolloClient();
-
+const notification =  useNotification();
 useHead({
   title: "Add Product",
 });
@@ -167,6 +167,24 @@ async function handleAdd() {
         },
       },
     });
-  } catch (error) {}
+    if(!errors) {
+      notification.success({ title: "Add success", duration: 3000 });
+      frm.value = {
+        name: "",
+        description: "",
+        price: 0,
+        cost: 0,
+        stock: 0,
+        categoryId: 0,
+        imageUrl: "",
+      };
+      return
+    }
+    
+    notification.error({ title: "Add failed", duration: 3000 });
+    throw new Error(`Cannot add product: ${errors}`);
+  } catch (error) {
+    throw new Error(`Cannot add product: ${error}`);
+  }
 }
 </script>
