@@ -1,7 +1,7 @@
 <template>
     <div>
         Product page - 
-        <nuxt-link to="/products/add">Add</nuxt-link>
+        <nuxt-link to="/products/add">Add</nuxt-link> |
         <button @click="$router.push('/products/add')">
             add
         </button>
