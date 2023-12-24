@@ -42,7 +42,7 @@
       </div>
       <div>
         <n-form-item label="Category">
-          <n-select />
+          <n-select :options="categories" value-field="id" label-field="name" />
         </n-form-item>
       </div>
       <div class="mb-4">
@@ -72,6 +72,8 @@
 </template>
 
 <script setup lang="ts">
+const { client } = useApolloClient();
+
 useHead({
   title: "Add Product",
 });
@@ -85,6 +87,25 @@ const frm = ref({
   categoryId: 0,
   imageUrl: "",
 });
+
+const categories = ref([]);
+
+const CATEGORY = gql`
+  query getCategories {
+    categories: terms {
+      id
+      name
+    }
+  }
+`;
+async function getCategories() {
+  const { data, errors } = await client.query({
+    query: CATEGORY,
+  });
+  categories.value = data.categories;
+}
+
+getCategories();
 
 const image = ref(null);
 
@@ -110,4 +131,42 @@ const format = (value: number | null) => {
   if (value === null) return "";
   return value.toLocaleString("en-US");
 };
+
+const INSERT = gql`
+  mutation insertProduct($object: products_insert_input!) {
+    product: insert_products_one(object: $object) {
+      id
+      name
+      description
+      price
+      cost
+      stock
+      imageUrl: image_url
+      categoryId: category_id
+      term {
+        id
+        name
+      }
+    }
+  }
+`;
+
+async function handleAdd() {
+  try {
+    const { name, description, price, cost, categoryId, stock } = frm.value;
+    const { data, errors } = await client.mutate({
+      mutation: INSERT,
+      variables: {
+        object: {
+          name,
+          description,
+          price,
+          cost,
+          stock,
+          category_id: categoryId,
+        },
+      },
+    });
+  } catch (error) {}
+}
 </script>
