@@ -1,3 +1,5 @@
+import { KEY_TOKEN } from "./constants";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   nitro: {
@@ -42,7 +44,7 @@ export default defineNuxtConfig({
         connectToDevTools: false,
         defaultOptions: {},
         inMemoryCacheOptions: {},
-        tokenName: 'token',
+        tokenName: KEY_TOKEN,
         tokenStorage: 'cookie',
         authType: 'Bearer',
         authHeader: 'Authorization'
