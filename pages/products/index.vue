@@ -29,7 +29,6 @@
 </template>
 
 <script setup lang="ts">
-import { KEY_TOKEN } from "~/constants";
 
 useHead({
   title: "Product",

@@ -29,7 +29,6 @@ async function getImage(id: string) {
   };
 
   try {
-    console.log(options);
     const req = await fetch(
       `${config.public.uploadUrl}/files/${id}/presignedurl`,
       options
