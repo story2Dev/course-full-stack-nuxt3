@@ -184,6 +184,7 @@ const PRODUCT_ID = gql`
       price
       cost
       description
+      stock
       imageUrl: image_url
       categoryId: category_id
       term {
