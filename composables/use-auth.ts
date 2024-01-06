@@ -48,8 +48,7 @@ export const useAuth = () => {
           refreshToken,
         },
       });
-      console.log(res)
-      // setAuth(res);
+      setAuth(res);
     } catch (error) {
       throw new Error(`[useAuth] refreshToken: error: ${error}`);
     }
