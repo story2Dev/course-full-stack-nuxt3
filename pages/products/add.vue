@@ -20,8 +20,8 @@
               v-model:value="frm.price"
               placeholder="Price"
               :show-button="false"
-              :parse="parse"
-              :format="format"
+              :parse="parseInput"
+              :format="formatNumber"
             />
           </n-form-item>
           <n-form-item label="Cost">
@@ -29,8 +29,8 @@
               v-model:value="frm.cost"
               placeholder="Cost"
               :show-button="false"
-              :parse="parse"
-              :format="format"
+              :parse="parseInput"
+              :format="formatNumber"
             />
           </n-form-item>
           <n-form-item label="Init Stock">
@@ -154,17 +154,6 @@ function handleSelectImage(e: any) {
     previewImage.innerHTML = `<img src="${imageUrl}" class="w-20 h-20 rounded-lg" />`;
   };
 }
-
-const parse = (input: string) => {
-  const nums = input.replace(/,/g, "").trim();
-  if (/^\d+(\.(\d+)?)?$/.test(nums)) return Number(nums);
-  return nums === "" ? null : Number.NaN;
-};
-
-const format = (value: number | null) => {
-  if (value === null) return "";
-  return value.toLocaleString("en-US");
-};
 
 const INSERT = gql`
   mutation insertProduct($object: products_insert_input!) {

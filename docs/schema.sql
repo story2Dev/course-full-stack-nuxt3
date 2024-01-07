@@ -28,6 +28,7 @@ create table if not exists product_stock(
     stock int NOT NULL,
     price numeric(10,2) NOT NULL,
     cost numeric(10,2) NOT NULL,
+    on_date date null default now(),
     created_at timestamp NOT NULL DEFAULT now(),
     updated_at timestamp NOT NULL DEFAULT now()
 );

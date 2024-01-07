@@ -7,6 +7,7 @@
       <tr>
         <td></td>
         <td>Name</td>
+        <td>Stock</td>
         <td>Price</td>
         <td>Action</td>
       </tr>
@@ -18,6 +19,7 @@
           <td>
             <nuxt-link :to="`/products/${item.id}`">{{ item.name }}</nuxt-link>
           </td>
+          <td>{{ item.stock }}</td>
           <td>{{ item.price }}</td>
           <td>
             <nuxt-link :to="`/products/${item.id}/edit`">Edit</nuxt-link>
@@ -36,6 +38,7 @@
         </tr>
       </tbody>
     </table>
+    
   </div>
 </template>
 
@@ -59,6 +62,7 @@ const PRODUCTS_QUERY = gql`
       price
       cost
       description
+      stock
       imageUrl: image_url
     }
   }
