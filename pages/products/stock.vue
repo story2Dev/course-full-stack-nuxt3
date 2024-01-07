@@ -213,6 +213,7 @@ async function handleImport() {
     const { data, errors } = await client.mutate({
       mutation: INSERT_STOCK,
       variables: {
+        // for insert product stock
         object: {
           price,
           product_id: productId,
@@ -220,6 +221,7 @@ async function handleImport() {
           quantity,
           stock: quantity,
         },
+        // for update product variable
         productId,
         productSet: {
           stock: currentStock,
