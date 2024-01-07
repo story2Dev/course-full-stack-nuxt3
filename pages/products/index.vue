@@ -21,6 +21,17 @@
           <td>{{ item.price }}</td>
           <td>
             <nuxt-link :to="`/products/${item.id}/edit`">Edit</nuxt-link>
+
+            <n-popconfirm
+              @positive-click="handleDelete(item.id)"
+              negative-text="Cancel"
+              positive-text="Delete"
+            >
+              <template #trigger>
+                <n-button>Delete</n-button>
+              </template>
+              Delete Product: {{ item.name }}
+            </n-popconfirm>
           </td>
         </tr>
       </tbody>
@@ -29,7 +40,6 @@
 </template>
 
 <script setup lang="ts">
-
 useHead({
   title: "Product",
 });
@@ -67,4 +77,26 @@ async function getProducts() {
 }
 
 getProducts();
+
+const DELETE_PRODUCT = gql`
+  mutation delete($id: uuid!) {
+    product: delete_products_by_pk(id: $id) {
+      id
+      name
+    }
+  }
+`;
+
+async function handleDelete(id: string) {
+  try {
+    const { data, errors } = await client.mutate({
+      mutation: DELETE_PRODUCT,
+      variables: { id },
+    });
+    console.log({ data, errors });
+    products.value = products.value.filter((e) => e.id !== id);
+  } catch (error) {
+    console.log(error);
+  }
+}
 </script>
