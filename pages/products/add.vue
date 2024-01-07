@@ -224,7 +224,7 @@ function handleAdd(e: MouseEvent) {
               cost,
               stock,
               category_id: categoryId,
-              image_url: imageUrl || null,
+              image_url: frm.value.imageUrl || null,
             },
           },
         });
