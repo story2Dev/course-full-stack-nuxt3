@@ -48,6 +48,7 @@
               :options="categories"
               value-field="id"
               label-field="name"
+              filterable
             />
           </n-form-item>
         </div>
