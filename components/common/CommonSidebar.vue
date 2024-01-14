@@ -6,6 +6,7 @@
       :to="item.link"
       active-class="text-blue-700 bg-blue-100"
       class="rounded-lg p-2"
+      :class="isActive(item.link) ? 'text-blue-700 bg-blue-100' : ''"
     >
       <Icon :name="item.icon" size="20" />
     </nuxt-link>
@@ -30,4 +31,22 @@ const menu = [
     link: "/settings",
   },
 ];
+
+// check active path
+const route = useRoute();
+const activePath = computed(() => route.path);
+
+const isActive = (path: string) => {
+  if (!path) return false;
+
+  if (path === "/") {
+    return activePath.value === "/";
+  }
+
+  const pathArr = path.split("/")[1];
+  const current  = activePath.value.split('/')[1]
+  return pathArr === current
+};
+
+
 </script>
