@@ -2,7 +2,7 @@
   <naive-config>
     <n-notification-provider>
     <NuxtLayout>
-      <NuxtPage />
+        <NuxtPage />
     </NuxtLayout>
   </n-notification-provider>
   </naive-config>
