@@ -1,69 +1,83 @@
 <template>
   <div>
-    Category
-    <div class="flex">
-      <n-input v-model:value="name"></n-input>
-      <n-button @click="handleAdd">Add</n-button>
-    </div>
+    <nav class="flex justify-between px-4 mt-2">
+      <h2 class="text-lg font-bold">Category</h2>
+      <div class="flex">
+        <n-button @click="isAdd=true">Add</n-button>
+      </div>
+    </nav>
 
-    <div class="flex">
-      <n-input v-model:value="frm.name"></n-input>
-      <n-button @click="handleUpdate">Update</n-button>
-    </div>
+    <n-modal v-model:show="isAdd">
+      <n-card class="max-w-sm" title="Add Category">
+        <n-input v-model:value="name"></n-input>
+        <n-button class="mt-4" @click="handleAdd">Add</n-button>
+      </n-card>
+    </n-modal>
 
-    <n-card>
-      <n-input
-        v-model:value="search"
-        placeholder="Search"
-        @keyup.enter="handleSearch"
-      />
-      <div>
-        <table>
+    <n-modal v-model:show="isEdit">
+      <n-card class="max-w-sm" title="Edit Category">
+        <n-input v-model:value="frm.name"></n-input>
+        <n-button class="mt-4" @click="handleUpdate">Update</n-button>
+      </n-card>
+    </n-modal>
+
+    <div>
+      <table class="w-full">
+        <thead class="border-b text-left">
           <tr>
-            <th class="cursor-pointer" @click="toggleOrderBy">
+            <th class="cursor-pointer p-4" @click="toggleOrderBy">
               Name
-              <Icon :name="orderByMode === 'asc' ? 'system-uicons:arrow-up' : 'system-uicons:arrow-down'" />
+              <Icon
+                :name="
+                  orderByMode === 'asc'
+                    ? 'system-uicons:arrow-up'
+                    : 'system-uicons:arrow-down'
+                "
+              />
             </th>
             <th>Action</th>
           </tr>
-          <tbody>
-            <tr v-for="(item, index) in items" :key="index">
-              <td>{{ item.name }}</td>
-              <td>
-                <n-button size="small" @click="setEdit(item)">Edit</n-button>
+        </thead>
+        <tbody class="divide-y">
+          <tr v-for="(item, index) in items" :key="index">
+            <td class="px-4">{{ item.name }}</td>
+            <td>
+              <n-button size="small" @click="setEdit(item)">Edit</n-button>
 
-                <n-popconfirm
-                  @positive-click="handleDelete(item.id)"
-                  positive-text="Delete"
-                  negative-text="Cancel"
-                >
-                  <template #trigger>
-                    <n-button size="small">Delete</n-button>
-                  </template>
-                  <div>Are you sure to delete "{{ item.name }}" ?</div>
-                </n-popconfirm>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              <n-popconfirm
+                @positive-click="handleDelete(item.id)"
+                positive-text="Delete"
+                negative-text="Cancel"
+              >
+                <template #trigger>
+                  <n-button size="small">Delete</n-button>
+                </template>
+                <div>Are you sure to delete "{{ item.name }}" ?</div>
+              </n-popconfirm>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-        <n-pagination
-          v-model:page="page"
-          :page-count="totalPage"
-          @update:page="handleSearch"
-        />
-      </div>
-    </n-card>
+      <n-pagination
+        v-model:page="page"
+        :page-count="totalPage"
+        class="mx-4"
+        @update:page="handleSearch"
+      />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 const { getTerms, items } = useTerm();
+const { search, limit } = useApp();
+const isAdd = ref(false)
+const isEdit = ref(false)
 
 const page = ref(1);
-const search = ref("");
 const totalPage = ref(0);
-const limit = 10;
+
 
 const orderByMode = ref("asc");
 function toggleOrderBy() {
@@ -174,6 +188,7 @@ const frm = ref({
 
 function setEdit(item: any) {
   frm.value = { ...item };
+  isEdit.value = true
 }
 
 const DELETE = gql`
@@ -187,9 +202,12 @@ const DELETE = gql`
 async function handleDelete(id: number) {
   try {
     items.value = items.value.filter((item: any) => item.id !== id);
-    const {data, errors } = await client.mutate({ mutation: DELETE, variables: { id } });
-    
-    if(errors) {
+    const { data, errors } = await client.mutate({
+      mutation: DELETE,
+      variables: { id },
+    });
+
+    if (errors) {
       notification.warning({ title: "Delete failed", duration: 3000 });
       throw new Error(`Cannot delete term: ${errors}`);
     }
@@ -197,4 +215,12 @@ async function handleDelete(id: number) {
     throw new Error(`Cannot delete term: ${error}`);
   }
 }
+
+watch(
+  () => search.value,
+  () => {
+    page.value = 1;
+    handleSearch();
+  }
+);
 </script>
