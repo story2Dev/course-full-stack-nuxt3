@@ -1,19 +1,24 @@
 <template>
   <div>
-    Product page -
-    <nuxt-link to="/products/add">Add</nuxt-link> |
-    <button @click="$router.push('/products/add')">add</button>
-    <table>
-      <tr>
-        <td></td>
-        <td>Name</td>
-        <td>Stock</td>
-        <td>Price</td>
-        <td>Action</td>
-      </tr>
+    <nav class="px-4 py-2">
+      Product page -
+      <nuxt-link to="/products/add">Add</nuxt-link> |
+      <button @click="$router.push('/products/add')">add</button>
+    </nav>
+
+    <table class="w-full">
+      <thead class="border-b">
+        <tr>
+          <td></td>
+          <td>Name</td>
+          <td>Stock</td>
+          <td>Price</td>
+          <td>Action</td>
+        </tr>
+      </thead>
       <tbody class="divide-y">
         <tr v-for="(item, index) in products" :key="index">
-          <td>
+          <td class="px-4">
             <ProductImage :file-id="item.imageUrl" image-class="w-10" />
           </td>
           <td>
@@ -22,23 +27,24 @@
           <td>{{ item.stock }}</td>
           <td>{{ item.price }}</td>
           <td>
-            <nuxt-link :to="`/products/${item.id}/edit`">Edit</nuxt-link>
+            <div class="flex gap-2">
+              <nuxt-link :to="`/products/${item.id}/edit`">Edit</nuxt-link>
 
-            <n-popconfirm
-              @positive-click="handleDelete(item.id)"
-              negative-text="Cancel"
-              positive-text="Delete"
-            >
-              <template #trigger>
-                <n-button>Delete</n-button>
-              </template>
-              Delete Product: {{ item.name }}
-            </n-popconfirm>
+              <n-popconfirm
+                @positive-click="handleDelete(item.id)"
+                negative-text="Cancel"
+                positive-text="Delete"
+              >
+                <template #trigger>
+                  <button>Delete</button>
+                </template>
+                Delete Product: {{ item.name }}
+              </n-popconfirm>
+            </div>
           </td>
         </tr>
       </tbody>
     </table>
-    
   </div>
 </template>
 
