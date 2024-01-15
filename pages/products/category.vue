@@ -3,7 +3,7 @@
     <nav class="flex justify-between px-4 mt-2">
       <h2 class="text-lg font-bold">Category</h2>
       <div class="flex">
-        <n-button @click="isAdd=true">Add</n-button>
+        <n-button @click="isAdd = true">Add</n-button>
       </div>
     </nav>
 
@@ -72,12 +72,12 @@
 <script setup lang="ts">
 const { getTerms, items } = useTerm();
 const { search, limit } = useApp();
-const isAdd = ref(false)
-const isEdit = ref(false)
+const { insertLog } = useLog();
+const isAdd = ref(false);
+const isEdit = ref(false);
 
 const page = ref(1);
 const totalPage = ref(0);
-
 
 const orderByMode = ref("asc");
 function toggleOrderBy() {
@@ -136,6 +136,16 @@ async function handleAdd() {
         },
       },
     });
+    // insert log
+    insertLog({
+      tag: "category",
+      title: `Add category: ${name.value}`,
+      data: {
+        name: name.value,
+      },
+      int_id: data.term.id,
+    });
+
     console.log({ data, errors });
     if (!errors) {
       notification.success({ title: "Add success", duration: 3000 });
@@ -157,15 +167,25 @@ const UPDATE = gql`
 `;
 async function handleUpdate() {
   try {
-    const { id, name } = frm.value;
+    const { id, name: newName } = frm.value;
     const { data, errors } = await client.mutate({
       mutation: UPDATE,
       variables: {
         id,
-        object: { name },
+        object: { name: newName },
       },
     });
     console.log({ data, errors });
+    insertLog({
+      tag: "category",
+      title: `category has updated : from ${name.value} to ${newName}`,
+      data: {
+        name: newName,
+        origin: name.value,
+      },
+      int_id: data.term.id,
+    });
+
     if (!errors) {
       notification.success({ title: "Update success", duration: 3000 });
       items.value = items.value.map((item: any) => {
@@ -188,7 +208,7 @@ const frm = ref({
 
 function setEdit(item: any) {
   frm.value = { ...item };
-  isEdit.value = true
+  isEdit.value = true;
 }
 
 const DELETE = gql`

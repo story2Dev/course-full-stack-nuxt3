@@ -58,6 +58,7 @@ export const useAuth = () => {
     signIn,
     refreshToken,
     isAdmin,
-    isAuth
+    isAuth,
+    sessionCookie
   };
 };

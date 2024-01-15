@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS log.logs(
     title character varying NOT NULL,
     data jsonb NULL,
     user_id uuid NOT NULL REFERENCES auth.users(id),
-    int_id int NOT NULL,
+    int_id int NULL,
     uuid_id uuid NULL,
     ip character varying NULL,
     user_agent character varying NULL,
