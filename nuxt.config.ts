@@ -37,7 +37,7 @@ export default defineNuxtConfig({
       default: {
         httpEndpoint: process.env.NHOST_GRAPHQL_URL +'',
         browserHttpEndpoint: '',
-        wsEndpoint: '',
+        wsEndpoint: `wss://hsdqwvptbexpgufmcoyb.graphql.ap-southeast-1.nhost.run/v1`,
         httpLinkOptions: {},
         wsLinkOptions: {},
         websocketsOnly: false,
