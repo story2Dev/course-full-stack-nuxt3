@@ -5,8 +5,12 @@ export const useAuth = () => {
   const sessionCookie = useCookie<any>(KEY_SESSION);
   const tokenData = useCookie<string>(KEY_TOKEN);
 
-  const isAdmin = computed(() => sessionCookie.value?.user?.defaultRole === "admin");
+  const isAdmin = computed(
+    () => sessionCookie.value?.user?.defaultRole === "admin"
+  );
   const isAuth = computed(() => !!sessionCookie.value);
+
+  const user = computed(() => sessionCookie.value?.user || null);
 
   function setAuth(_session: any) {
     tokenData.value = _session.accessToken;
@@ -14,7 +18,6 @@ export const useAuth = () => {
       ..._session,
       accessTokenExpiresIn: Date.now() + _session.accessTokenExpiresIn * 1000,
     };
-   
   }
 
   async function signIn(email: string, password: string) {
@@ -54,11 +57,28 @@ export const useAuth = () => {
     }
   }
 
+  async function logOut() {
+    try {
+      const { refreshToken } = sessionCookie.value;
+      sessionCookie.value = null;
+      tokenData.value = "";
+      const req: any = await $fetch(config.public.authApi + "/signout", {
+        method: "POST",
+        body: { all: true, refreshToken },
+      });
+      navigateTo("/login");
+    } catch (error) {
+      navigateTo("/login");
+    }
+  }
+
   return {
     signIn,
     refreshToken,
     isAdmin,
     isAuth,
-    sessionCookie
+    sessionCookie,
+    user,
+    logOut,
   };
 };

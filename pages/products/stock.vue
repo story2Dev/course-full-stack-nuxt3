@@ -1,14 +1,14 @@
 <template>
   <div>
-    <section class="flex justify-between">
+    <section class="flex justify-between px-4">
       <h1 class="text-xl">Product Stock</h1>
       <article>
         <n-button @click="showModal = true">Import</n-button>
       </article>
     </section>
-    <table>
+    <table class="w-full text-left">
       <tr>
-        <th>Name</th>
+        <th class="px-4 py-2">Name</th>
         <th>quantity</th>
         <th>stock</th>
         <th>price</th>
@@ -17,7 +17,7 @@
       </tr>
       <tbody class="divide-y">
         <tr v-for="(item, index) in stocks" :key="index">
-          <td>{{ item.product.name }}</td>
+          <td class="px-4 py-2">{{ item.product.name }}</td>
           <td>{{ item.quantity }}</td>
           <td>{{ item.stock }}</td>
           <td>{{ item.price }}</td>

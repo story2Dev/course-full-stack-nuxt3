@@ -6,20 +6,21 @@
         <span>{{ todo.task }}</span> [{{ todo.status }}]
       </li>
     </ul>
+    <hr>
+    <div v-if="user?.defaultRole =='admin'">
+      edit
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { KEY_SESSION, KEY_TOKEN } from "~/constants";
 
-const token = useCookie(KEY_TOKEN);
-const session = useCookie(KEY_SESSION);
-console.log(token.value);
-console.log(session.value);
+definePageMeta({
+  middleware: "logged-only",
+  permissions: ["all"],
+});
 
-const products = await useFetch("/api/products");
-
-console.log(products.data?.value);
+const { user } = useAuth();
 
 const query = gql`
   subscription {
@@ -32,7 +33,6 @@ const query = gql`
 `;
 const variables = { channelId: "abc" };
 const { result, error } = useSubscription(query);
-console.log({ result, error });
 </script>
 
 <style scoped></style>

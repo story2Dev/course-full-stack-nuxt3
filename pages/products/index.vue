@@ -1,9 +1,8 @@
 <template>
   <div>
-    <nav class="px-4 py-2">
-      Product page -
-      <nuxt-link to="/products/add">Add</nuxt-link> |
-      <button @click="$router.push('/products/add')">add</button>
+    <nav class="px-4 py-2 flex justify-between">
+      <h2>Product</h2>
+      <nuxt-link to="/products/add">Add</nuxt-link>
     </nav>
 
     <table class="w-full">

@@ -8,7 +8,7 @@
     </aside>
     <main class="flex-grow">
       <CommonAppbar />
-      <div class="flex-grow">
+      <div class="flex-grow py-4">
         <slot></slot>
       </div>
     </main>
