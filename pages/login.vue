@@ -12,6 +12,15 @@
       <n-button :loading="loading" type="primary" @click="handleLogin()">
         Login
       </n-button>
+
+      <div>
+        <n-button @click="handleSignInWithSocial('google')">
+          Sign in with Google
+          <icon name="logos:google-icon" size="20" />
+        </n-button>
+
+       <button @click="test">test</button>
+      </div>
     </section>
   </div>
 </template>
@@ -29,6 +38,28 @@ const frm = ref({
 });
 const loading = ref(false);
 
+const { nhost } = useNhost();
+
+async function handleSignInWithSocial(provider = "google") {
+  switch (provider) {
+    case "google":
+      const res = await nhost.auth.signIn({
+        provider: "google",
+      });
+
+      console.log(res);
+      break;
+
+    default:
+      break;
+  }
+}
+
+
+function test(){
+  console.log(nhost.auth.getUser())
+}
+
 async function handleLogin() {
   try {
     loading.value = true;
@@ -43,7 +74,7 @@ async function handleLogin() {
       });
       navigateTo("/");
     }
-    
+
     loading.value = false;
   } catch (error) {
     notification.error({

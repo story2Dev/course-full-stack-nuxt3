@@ -10,6 +10,9 @@
     <div v-if="user?.defaultRole =='admin'">
       edit
     </div>
+
+    {{ $hello('Mark') }}
+    <button @click="$log.info('log click')">log</button>
   </div>
 </template>
 
@@ -19,7 +22,7 @@ definePageMeta({
   middleware: "logged-only",
   permissions: ["all"],
 });
-
+const { $hello, $log } = useNuxtApp()
 const { user } = useAuth();
 
 const query = gql`
@@ -33,6 +36,12 @@ const query = gql`
 `;
 const variables = { channelId: "abc" };
 const { result, error } = useSubscription(query);
+
+onMounted(() => {
+  $log.info('Mounted')
+  $log.warn('Mounted')
+  $log.error('Mounted')
+})
 </script>
 
 <style scoped></style>

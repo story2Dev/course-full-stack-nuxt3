@@ -42,7 +42,7 @@ export const useAuth = () => {
 
   async function refreshToken() {
     try {
-      const { accessTokenExpiresIn, refreshToken } = sessionCookie.value;
+      const { accessTokenExpiresIn, refreshToken } = sessionCookie.value || {}
       if (!refreshToken || !accessTokenExpiresIn) return;
       if (accessTokenExpiresIn - 300 > Date.now()) return;
       const res = await $fetch(config.public.authApi + "/token", {
@@ -80,5 +80,6 @@ export const useAuth = () => {
     sessionCookie,
     user,
     logOut,
+    setAuth
   };
 };
