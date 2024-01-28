@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@netlify/functions": "^2.4.0",
-    "@nhost/nhost-js": "^3.0.2"
+    "@nhost/nhost-js": "^3.0.2",
+    "date-fns": "^3.3.1"
   }
 }

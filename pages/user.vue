@@ -8,7 +8,7 @@
 definePageMeta({
     middleware: 'has-permission',
     // check from default role
-    permissions: ['admin', 'user', 'manager']
+    permissions: ['admin', 'user', 'manager','read']
 })
 
 </script>

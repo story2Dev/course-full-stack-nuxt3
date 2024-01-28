@@ -19,7 +19,12 @@
           <icon name="logos:google-icon" size="20" />
         </n-button>
 
-       <button @click="test">test</button>
+        <n-button @click="handleSignInWithSocial('facebook')">
+          Sign in with Facebook
+          <icon name="logos:facebook" size="20" />
+        </n-button>
+
+        <button @click="test">test</button>
       </div>
     </section>
   </div>
@@ -50,14 +55,18 @@ async function handleSignInWithSocial(provider = "google") {
       console.log(res);
       break;
 
+    case "facebook":
+      const res2 = await nhost.auth.signIn({
+        provider: "facebook",
+      });
+
     default:
       break;
   }
 }
 
-
-function test(){
-  console.log(nhost.auth.getUser())
+function test() {
+  console.log(nhost.auth.getUser());
 }
 
 async function handleLogin() {

@@ -13,17 +13,22 @@
 
     {{ $hello('Mark') }}
     <button @click="$log.info('log click')">log</button>
+    <hr />
+    {{ setting }}
+    <n-date-picker :format="setting.formatDate"></n-date-picker>
+    <n-date-picker format="dd/MM/yyyy"></n-date-picker>
   </div>
 </template>
 
 <script setup lang="ts">
 
 definePageMeta({
-  middleware: "logged-only",
+  // middleware: "logged-only",
   permissions: ["all"],
 });
 const { $hello, $log } = useNuxtApp()
 const { user } = useAuth();
+const { setting } = useApp()
 
 const query = gql`
   subscription {
