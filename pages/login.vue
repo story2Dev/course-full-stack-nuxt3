@@ -1,20 +1,20 @@
 <template>
   <div class="h-screen flex flex-col items-center justify-center">
     <section class="w-full max-w-sm mx-auto flex flex-col space-y-2">
-      <h1 class="text-xl">Login</h1>
-      <n-input v-model:value="frm.email" type="text" placeholder="Email" />
+      <h1 class="text-xl" id="title">Login</h1>
+      <n-input v-model:value="frm.email" type="text" placeholder="Email" id="email" />
       <n-input
         v-model:value="frm.password"
-        @keyup.enter="handleLogin()"
         type="password"
-        placeholder="Password"
+        placeholder="Password" id="password"
+        @keyup.enter="handleLogin()"
       />
-      <n-button :loading="loading" type="primary" @click="handleLogin()">
+      <n-button :loading="loading" type="primary" id="login" @click="handleLogin()">
         Login
       </n-button>
 
       <div>
-        <n-button @click="handleSignInWithSocial('google')">
+        <n-button id="google" @click="handleSignInWithSocial('google')">
           Sign in with Google
           <icon name="logos:google-icon" size="20" />
         </n-button>
