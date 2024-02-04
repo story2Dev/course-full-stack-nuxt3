@@ -4,5 +4,10 @@ export default defineVitestConfig({
   // any custom Vitest config you require
   test: {
     environment: "nuxt",
+    // outputFile: "test-results.json",
+    // coverage: {
+    //   reporter: ["text", "json", "html"],
+    // },
+    // setupFiles: ["./tests/setup.ts"],
   },
 });

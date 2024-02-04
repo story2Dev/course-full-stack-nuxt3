@@ -8,7 +8,10 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "test": "vitest"
+    "test": "vitest tests/*",
+    "e2e": "npx playwright test",
+    "e2e:report": "npx playwright test --reporter dot",
+    "e2e:web": "npx playwright show-report"
   },
   "devDependencies": {
     "@bg-dev/nuxt-naiveui": "^1.6.1",
@@ -16,6 +19,7 @@
     "@nuxt/test-utils": "^3.11.0",
     "@nuxtjs/apollo": "^5.0.0-alpha.11",
     "@nuxtjs/tailwindcss": "^6.10.1",
+    "@playwright/test": "^1.41.2",
     "@testing-library/vue": "^8.0.1",
     "@vitest/coverage-v8": "^1.2.2",
     "@vue/test-utils": "^2.4.4",
