@@ -17,7 +17,9 @@ export default defineNuxtConfig({
         },
       ],
     },
+    pageTransition: { name: 'slide-down', mode: 'out-in' },
   },
+  css:['~/assets/css/style.css'],
   modules: [
     '@nuxtjs/tailwindcss', '@bg-dev/nuxt-naiveui','@nuxtjs/apollo', 'nuxt-icon',
     '@nuxt/test-utils/module'
@@ -51,5 +53,5 @@ export default defineNuxtConfig({
         authHeader: 'Authorization'
       },
     }
-  }
+  },
 });
