@@ -1,7 +1,7 @@
 <template>
   <div>
     <n-form ref="formRef" :model="frm" :rules="rules">
-      <n-card class="max-w-2xl w-full mx-auto" title="Add new product">
+      <n-card class="max-w-2xl w-full mx-auto" title="Add product">
         <div>
           <n-form-item label="Name" path="name">
             <n-input v-model:value="frm.name" placeholder="Name"></n-input>
