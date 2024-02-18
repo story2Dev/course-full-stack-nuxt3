@@ -17,7 +17,7 @@ export default defineNuxtConfig({
         },
       ],
     },
-    pageTransition: { name: 'slide-down', mode: 'out-in' },
+    pageTransition: { name: 'slide-left', mode: 'out-in' },
   },
   css:['~/assets/css/style.css'],
   modules: [

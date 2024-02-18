@@ -33,3 +33,9 @@ create table if not exists product_stock(
     updated_at timestamp NOT NULL DEFAULT now()
 );
 
+create table if not exists settings(
+    id serial PRIMARY KEY,
+    key character varying,
+    current character varying,
+    options jsonb
+);
