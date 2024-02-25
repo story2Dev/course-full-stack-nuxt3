@@ -79,6 +79,18 @@
         </div>
       </article>
     </section>
+
+    <section class="grid grid-cols-3 p-4 gap-4">
+      <article>
+        <ProductLineChart class="h-64" />
+      </article>
+      <article>
+        <ProductBarChart class="h-64" />
+      </article>
+      <article>
+        <ProductPieChart class="h-64" />
+      </article>
+    </section>
   </div>
 </template>
 
