@@ -22,7 +22,7 @@ export default defineNuxtConfig({
   css:['~/assets/css/style.css'],
   modules: [
     '@nuxtjs/tailwindcss', '@bg-dev/nuxt-naiveui','@nuxtjs/apollo', 'nuxt-icon',
-    '@nuxt/test-utils/module'
+    '@nuxt/test-utils/module', '@nuxtjs/i18n',
   ],
   tailwindcss: {
     exposeConfig: true
@@ -54,4 +54,26 @@ export default defineNuxtConfig({
       },
     }
   },
+  i18n: {
+    locales: [
+      {
+        code: 'en',
+        name: 'English',
+        file: 'en-US.json'
+      },
+      {
+        code: 'lo',
+        name: 'Lao',
+        file: 'lo-LA.json'
+      },
+    ],
+    lazy: true,
+    langDir: 'lang',
+    defaultLocale: 'lo',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root' // recommended
+    }
+  }
 });

@@ -1,6 +1,6 @@
 <template>
   <nav class="flex flex-col items-center justify-center mt-4 space-y-2">
-    <nuxt-link
+    <nuxt-link-locale
       v-for="item in menu"
       :key="item.title"
       :to="item.link"
@@ -9,7 +9,7 @@
       :class="isActive(item.link) ? 'text-blue-700 bg-blue-100' : ''"
     >
       <Icon :name="item.icon" size="20" />
-    </nuxt-link>
+    </nuxt-link-locale>
   </nav>
 </template>
 
