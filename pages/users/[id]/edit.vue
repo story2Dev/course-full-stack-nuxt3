@@ -119,6 +119,8 @@ async function handleUpdateUser() {
       },
     });
 
+    console.log(passHash);
+
     // update user role
     client.mutate({
       mutation: UPDATE_USER,
