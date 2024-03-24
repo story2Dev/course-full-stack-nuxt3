@@ -2,9 +2,9 @@ import { KEY_TOKEN } from "./constants";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  nitro: {
-    preset: "netlify",
-  },
+  // nitro: {
+  //   preset: "netlify",
+  // },
   devtools: { enabled: true },
   ssr: false,
   app: {
