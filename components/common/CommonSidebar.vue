@@ -26,6 +26,11 @@ const menu = [
     link: "/products",
   },
   {
+    icon: "system-uicons:users",
+    title: "user",
+    link: "/users",
+  },
+  {
     icon: "heroicons:cog-solid",
     title: "Setting",
     link: "/settings",
