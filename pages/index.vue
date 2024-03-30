@@ -100,6 +100,7 @@ definePageMeta({
     name: "slide",
     mode: "out-in",
   },
+  middleware: "logged-only",
 });
 
 const QUERY = gql`
