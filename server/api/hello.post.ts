@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   return {
     status: 200,
     body: {
-      message: "hello get",
+      message: "hello post",
     },
   };
 });

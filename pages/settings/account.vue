@@ -67,6 +67,9 @@
           </li>
         </ol>
       </li>
+      <li class="py-2">
+        <button @click="logOut()">Logout</button>
+      </li>
     </ul>
   </div>
 </template>
@@ -74,4 +77,6 @@
 <script setup lang="ts">
 const { locale, setLocale } = useI18n();
 const switchLocalePath = useSwitchLocalePath();
+
+const { logOut } = useAuth();
 </script>

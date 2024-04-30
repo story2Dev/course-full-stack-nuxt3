@@ -18,12 +18,18 @@
     <ul class="flex gap-4 items-center">
       <li class="flex gap-2 items-center">
         <n-badge :value="20" :max="15">
-          <Icon name="solar:bell-line-duotone"  class="text-slate-600" size="30" />
+          <Icon
+            name="solar:bell-line-duotone"
+            class="text-slate-600"
+            size="30"
+          />
         </n-badge>
       </li>
-      <li class="flex gap-2 items-center">
-        <n-avatar circle></n-avatar>
-        <h2 class="text-lg font-bold">Mark AI</h2>
+      <li>
+        <nuxt-link to="/settings/account" class="flex gap-2 items-center">
+          <n-avatar circle></n-avatar>
+          <h2 class="text-lg font-bold">Mark AI</h2>
+        </nuxt-link>
       </li>
     </ul>
   </nav>
