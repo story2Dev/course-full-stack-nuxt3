@@ -73,7 +73,12 @@ async function handleLogin() {
   try {
     loading.value = true;
     const { email, password } = frm.value;
+    nhost.auth.signIn({
+      email,
+      password,
+    });
     const isLogged = await auth.signIn(email, password);
+   
 
     if (isLogged) {
       notification.success({
