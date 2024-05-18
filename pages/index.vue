@@ -90,6 +90,17 @@
       <article>
         <ProductPieChart class="h-64" />
       </article>
+
+      <ul>
+        {{
+          cards
+        }}
+        <hr />
+        <li v-for="(item, index) in pxx">
+          {{ item.id }} {{ item.name }}
+          <button @click="cards.push(item.id)">+</button>
+        </li>
+      </ul>
     </section>
   </div>
 </template>
@@ -136,6 +147,53 @@ async function getData() {
 }
 
 getData();
+
+const cards = ref([]);
+
+const pxx = [
+  { id: 1, name: "Pepsi" },
+  { id: 2, name: "Cake" },
+];
+
+const { user } = useAuth();
+
+const INSERT_EXP = gql`
+  mutation ($object: exps_insert_input!) {
+    exp: insert_exps_one(object: $object) {
+      id
+    }
+  }
+`;
+const INSERT_EXP_DETAIL = gql`
+  mutation ($object: exps_insert_input!) {
+    exp: insert_exps_one(object: $object) {
+      id
+    }
+  }
+`;
+async function addExp() {
+  const inputExp = {
+    user_id: user.value?.id,
+  };
+
+  // insert exp
+  const req = await client.mutate({
+    mutation: INSERT_EXP,
+    variables: { object: inputExp },
+  });
+  console.log(req);
+
+  const inputExpDetail = {
+    expId: req.data.exp.id,
+    productId: 1,
+  };
+  // insert export detail
+  const reqDetail = await client.mutate({
+    mutation: INSERT_EXP_DETAIL,
+    variables: { object: inputExpDetail },
+  });
+  console.log(reqDetail)
+}
 </script>
 
 <style scoped></style>
